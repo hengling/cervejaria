@@ -9,9 +9,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BuscarCervejaPorNomeUseCaseImpl implements BuscarCervejaPorNomeUseCase {
 
-    private CervejaDataProvider cervejaDataProvider;
+    private final CervejaDataProvider cervejaDataProvider;
 
-    private BuscarCervejaPorNomeOutputDataMapper outputDataMapper;
+    private final BuscarCervejaPorNomeOutputDataMapper outputDataMapper;
 
     @Override
     public BuscarCervejaPorNomeOutputData execute(BuscarCervejaPorNomeInputData inputData) {
