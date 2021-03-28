@@ -12,7 +12,7 @@ public class BuscarListaCervejaUseCaseImpl implements BuscarListaCervejaUseCase 
     private final BuscarListaCervejaOutputDataMapper outputDataMapper;
 
     @Override
-    public BuscarListaCervejaOutputData execute(BuscarListaCervejaInputData inputData) {
+    public BuscarListaCervejaOutputData execute() {
         return outputDataMapper.toOutputData(cervejaDataProvider.buscarTodos());
     }
 }

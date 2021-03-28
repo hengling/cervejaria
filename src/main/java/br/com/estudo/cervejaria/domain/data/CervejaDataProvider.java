@@ -8,7 +8,11 @@ import java.util.Optional;
 public interface CervejaDataProvider {
     Cerveja salvar(Cerveja cerveja);
 
+    Optional<Cerveja> buscarPorId(long id);
+
     Optional<Cerveja> buscarPorNome(String nome);
 
     List<Cerveja> buscarTodos();
+
+    void remover(Cerveja cerveja);
 }

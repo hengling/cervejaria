@@ -26,6 +26,12 @@ public class CervejaDataProviderImpl implements CervejaDataProvider {
     }
 
     @Override
+    public Optional<Cerveja> buscarPorId(long id) {
+        final var entidade = repository.findById(id);
+        return entidade.map(mapper::toBusinessEntity);
+    }
+
+    @Override
     public Optional<Cerveja> buscarPorNome(String nome) {
         final var entidade = repository.findByNome(nome);
         return entidade.map(mapper::toBusinessEntity);
@@ -37,5 +43,10 @@ public class CervejaDataProviderImpl implements CervejaDataProvider {
         return entidades.stream()
                 .map(mapper::toBusinessEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void remover(Cerveja cerveja) {
+        repository.delete(mapper.fromBusinessEntity(cerveja));
     }
 }

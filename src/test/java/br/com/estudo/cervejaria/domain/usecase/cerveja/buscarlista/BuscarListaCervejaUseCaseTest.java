@@ -59,7 +59,7 @@ public class BuscarListaCervejaUseCaseTest {
 
         when(cervejaDataProvider.buscarTodos()).thenReturn(Collections.singletonList(cerveja));
 
-        final var outputData = useCase.execute(null);
+        final var outputData = useCase.execute();
 
         assertThat(outputDataEsperado, is(equalTo(outputData)));
     }
@@ -72,7 +72,7 @@ public class BuscarListaCervejaUseCaseTest {
 
         when(cervejaDataProvider.buscarTodos()).thenReturn(Collections.emptyList());
 
-        final var outputData = useCase.execute(null);
+        final var outputData = useCase.execute();
 
         assertThat(outputDataEsperado, is(equalTo(outputData)));
     }
