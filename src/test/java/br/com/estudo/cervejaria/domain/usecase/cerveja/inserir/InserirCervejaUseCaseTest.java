@@ -61,7 +61,7 @@ class InserirCervejaUseCaseTest {
     }
 
     @Test
-    void deveInserirCervejaQuandoInformarOsDadosCorretamente() {
+    void quandoInformarOsDadosCorretamenteDeveInserirCervejaQ() {
         when(cervejaDataProvider.salvar(any(Cerveja.class))).thenReturn(cervejaSalva);
 
         var outputData = useCase.execute(inputData);
@@ -70,7 +70,7 @@ class InserirCervejaUseCaseTest {
     }
 
     @Test
-    void deveFalharQuandoJaExistirOutraCervejaComOMesmoNome() {
+    void quandoJaExistirOutraCervejaComOMesmoNomeDeveLancarExcecao() {
         when(cervejaDataProvider.buscarPorNome(inputData.getNome())).thenReturn(Optional.of(cervejaSalva));
 
         assertThrows(CervejaJaCadastradaException.class, () -> useCase.execute(inputData));
