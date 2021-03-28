@@ -1,4 +1,4 @@
-package br.com.estudo.cervejaria;
+package br.com.estudo.cervejaria.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
