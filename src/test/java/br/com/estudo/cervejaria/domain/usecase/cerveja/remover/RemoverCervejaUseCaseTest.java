@@ -41,6 +41,7 @@ public class RemoverCervejaUseCaseTest {
 
         useCase.execute(inputData);
 
+        verify(cervejaDataProvider, times(1)).buscarPorId(cervejaId);
         verify(cervejaDataProvider, times(1)).remover(cervejaParaRemover);
     }
 
