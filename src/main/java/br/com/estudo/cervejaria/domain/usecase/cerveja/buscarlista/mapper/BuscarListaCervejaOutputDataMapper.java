@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface BuscarListaCervejaOutputDataMapper {
 
     BuscarListaCervejaOutputDataMapper INSTANCE = Mappers.getMapper(BuscarListaCervejaOutputDataMapper.class);

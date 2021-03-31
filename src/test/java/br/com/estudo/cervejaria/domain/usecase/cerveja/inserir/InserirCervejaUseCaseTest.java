@@ -29,7 +29,7 @@ class InserirCervejaUseCaseTest {
             .marca("Ambev")
             .max(50)
             .quantidade(10)
-            .tipo("LAGER")
+            .tipo(Cerveja.Tipo.LAGER)
             .build();
 
     final Cerveja cervejaSalva = Cerveja.builder()

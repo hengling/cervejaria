@@ -5,7 +5,7 @@ import br.com.estudo.cervejaria.domain.entity.Cerveja;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CervejaMapper {
 
     CervejaMapper INSTANCE = Mappers.getMapper(CervejaMapper.class);

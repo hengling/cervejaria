@@ -33,7 +33,7 @@ public class CervejaDataProviderImpl implements CervejaDataProvider {
 
     @Override
     public Optional<Cerveja> buscarPorNome(String nome) {
-        final var entidade = repository.findByNome(nome);
+        final var entidade = repository.findByNomeIgnoreCase(nome);
         return entidade.map(mapper::toBusinessEntity);
     }
 

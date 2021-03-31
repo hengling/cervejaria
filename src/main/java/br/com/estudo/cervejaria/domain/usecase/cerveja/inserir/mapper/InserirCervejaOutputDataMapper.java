@@ -5,7 +5,7 @@ import br.com.estudo.cervejaria.domain.usecase.cerveja.inserir.InserirCervejaOut
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface InserirCervejaOutputDataMapper {
 
     InserirCervejaOutputDataMapper INSTANCE = Mappers.getMapper(InserirCervejaOutputDataMapper.class);

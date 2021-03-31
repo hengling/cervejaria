@@ -33,7 +33,7 @@ public class InserirCervejaUseCaseImpl implements InserirCervejaUseCase {
                 .marca(inputData.getMarca())
                 .max(inputData.getMax())
                 .quantidade(inputData.getQuantidade())
-                .tipo(Cerveja.Tipo.valueOf(inputData.getTipo()))
+                .tipo(inputData.getTipo())
                 .build();
     }
 
