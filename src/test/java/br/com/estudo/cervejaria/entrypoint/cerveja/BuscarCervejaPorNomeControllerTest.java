@@ -3,6 +3,8 @@ package br.com.estudo.cervejaria.entrypoint.cerveja;
 import br.com.estudo.cervejaria.domain.usecase.cerveja.buscarpornome.BuscarCervejaPorNomeInputData;
 import br.com.estudo.cervejaria.domain.usecase.cerveja.buscarpornome.BuscarCervejaPorNomeOutputData;
 import br.com.estudo.cervejaria.domain.usecase.cerveja.buscarpornome.BuscarCervejaPorNomeUseCase;
+import br.com.estudo.cervejaria.domain.usecase.cerveja.buscarpornome.exception.CervejaNaoEncontradaException;
+import br.com.estudo.cervejaria.entrypoint.GlobalErrorHandler;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +45,7 @@ public class BuscarCervejaPorNomeControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .setViewResolvers((s, locale) -> new MappingJackson2JsonView())
+                .setControllerAdvice(new GlobalErrorHandler())
                 .build();
     }
 
@@ -72,5 +75,19 @@ public class BuscarCervejaPorNomeControllerTest {
         var responseBody = GSON.fromJson(responseBodyString, BuscarCervejaPorNomeOutputData.class);
 
         assertThat(outputData, is(equalTo(responseBody)));
+    }
+
+    @Test
+    public void quandoRealizarGETComUmNomeInvalidoEntaoDeveRetornarErro() throws Exception {
+        // given
+        var nomeInvalido = "invalido";
+
+        // when
+        when(useCase.execute(any(BuscarCervejaPorNomeInputData.class))).thenThrow(CervejaNaoEncontradaException.class);
+
+        // then
+        var responseBodyString = mockMvc.perform(MockMvcRequestBuilders.get(URL_PATH + "/" + nomeInvalido)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

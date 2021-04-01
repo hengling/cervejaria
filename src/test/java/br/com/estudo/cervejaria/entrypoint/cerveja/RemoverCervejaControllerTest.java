@@ -2,7 +2,8 @@ package br.com.estudo.cervejaria.entrypoint.cerveja;
 
 import br.com.estudo.cervejaria.domain.usecase.cerveja.remover.RemoverCervejaInputData;
 import br.com.estudo.cervejaria.domain.usecase.cerveja.remover.RemoverCervejaUseCase;
-import com.google.gson.Gson;
+import br.com.estudo.cervejaria.domain.usecase.cerveja.remover.exception.CervejaNaoEncontradaException;
+import br.com.estudo.cervejaria.entrypoint.GlobalErrorHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,13 +18,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 public class RemoverCervejaControllerTest {
 
     private static final String URL_PATH = "/api/v1/cervejas";
-    private static final Gson GSON = new Gson();
 
     private MockMvc mockMvc;
 
@@ -38,6 +39,7 @@ public class RemoverCervejaControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .setViewResolvers((s, locale) -> new MappingJackson2JsonView())
+                .setControllerAdvice(new GlobalErrorHandler())
                 .build();
     }
 
@@ -53,5 +55,19 @@ public class RemoverCervejaControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(URL_PATH + "/" + id)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void quandoRealizarDELETEComIdInvalidoEntaoDeveRetornarErro() throws Exception {
+        // given
+        var id = 1L;
+
+        // when
+        doThrow(CervejaNaoEncontradaException.class).when(useCase).execute(new RemoverCervejaInputData(id));
+
+        // then
+        mockMvc.perform(MockMvcRequestBuilders.delete(URL_PATH + "/" + id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
